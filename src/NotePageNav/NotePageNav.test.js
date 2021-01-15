@@ -21,3 +21,4 @@ describe(`NotePageNav component`, () => {
     expect(toJson(h3)).toMatchSnapshot()
   })
 })
+})

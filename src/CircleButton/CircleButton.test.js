@@ -1,4 +1,4 @@
-import React from 'react';
+iimport React from 'react';
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
 import CircleButton from './CircleButton'

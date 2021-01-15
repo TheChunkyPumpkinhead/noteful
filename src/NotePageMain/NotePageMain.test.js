@@ -36,4 +36,3 @@ describe(`NotePageMain component`, () => {
       expect(toJson(content)).toMatchSnapshot()
     })
   })
-})
