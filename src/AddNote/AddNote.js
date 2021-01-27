@@ -116,7 +116,7 @@ export default class AddNote extends Component {
     this.handleSubmit = (event) => {
       event.preventDefault();
       console.log(this.state.folder.id)
-      this.addNoteRequest(this.state.noteName, this.state.noteContent, this.context.folders.find((folder) => folder.name === this.state.folder.id)
+      this.addNoteRequest(this.state.noteName, this.state.noteContent,( this.state.folder)
         //folder.name === this.state.folder).id
         , new Date(), addNote)
      
@@ -129,15 +129,22 @@ export default class AddNote extends Component {
       <div>
         <form onSubmit={(event) => this.handleSubmit(event)}>
           <label > Note Name
-            <input placeholder="Note name" onChange={(e) => this.updateNoteName(e.target.value)}></input>
+            <input required placeholder="Note name" onChange={(e) => this.updateNoteName(e.target.value)}></input>
           </label>
           <label> Note content
             <input placeholder="Note content" onChange={(e) => this.updateNoteContent(e.target.value)}></input>
           </label>
           <label> Folder Name
-            <input placeholder="Folder name" onChange={(e) =>
-              this.updateFolder(e.target.value)}>
-            </input>
+            <select name="folderid" onChange={(e) =>  this.updateFolder(e.target.value)}>
+              {this.context.folders.map(folder=> <option 
+              value={folder.id}
+              key={folder.id}>
+                {folder.name}
+                </option>)}
+            </select>
+            
+             
+            
           </label>
           <button type="submit">Submit</button>
         </form>
