@@ -3,13 +3,14 @@ import { Route, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import NoteListNav from '../src/NoteListNav/NoteListNav'
 import NotePageNav from '../src/NotePageNav/NotePageNav'
-import NoteListMain from '../src/NoteListMain/NoteListMain'
+import NoteListMain from './NoteListMain/NoteListMain'
 import NotePageMain from '../src/NotePageMain/NotePageMain'
 import NotesContext from '../src/NotesContext';
 import AddFolder from '../src/AddFolder/AddFolder';
 import AddNote from '../src/AddNote/AddNote';
 import { findNote } from '../src/notes-helpers';
 import HandleError from '../src/HandleError';
+
 
 import './App.css'
 
@@ -141,7 +142,8 @@ class App extends Component {
       notes: this.state.notes,
       deleteNote: this.deleteNote,
       addFolder: this.addFolder,
-      addNote: this.addNote
+      addNote: this.addNote,
+      getNotes:this.getNotes,
     }
 
     return (

@@ -13,7 +13,7 @@ export default function NotePageMain(props) {
         match={props.match}
       />
       <div className='NotePageMain__content'>
-        {props.note.content.split(/\n \r|\n/).map((para, i) =>
+        {(props.note.content ||  '').split(/\n \r|\n/).map((para, i) =>
           <p key={i}>{para}</p>
         )}
       </div>

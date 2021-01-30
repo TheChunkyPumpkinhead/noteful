@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ValiationError from './ValidationError';
 import NotesContext from '../NotesContext';
+import config from '../config'
+import PropTypes from 'prop-types'
 
 export default class AddFolder extends Component {
   constructor(props) {
@@ -44,7 +46,9 @@ export default class AddFolder extends Component {
   }
 
   addFolderRequest(name, addFolder) {
-    fetch(`http://localhost:9090/folders`, {
+    fetch(`${config.API_ENDPOINT}/folders`, {
+
+    // fetch(`http://localhost:9090/folders`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -70,6 +74,7 @@ export default class AddFolder extends Component {
       event.preventDefault();
       console.log(addFolder)
       this.addFolderRequest(this.state.name, addFolder);
+      this.props.history.push("/")
     }
 
     return (
@@ -82,5 +87,9 @@ export default class AddFolder extends Component {
       </form>
     )
   }
+  
 
 }
+AddFolder.propTypes = {
+  history: PropTypes.any
+};
