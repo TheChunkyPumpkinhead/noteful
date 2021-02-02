@@ -3,6 +3,7 @@ import ValiationError from './ValidationError';
 import NotesContext from '../NotesContext';
 import config from '../config'
 import PropTypes from 'prop-types'
+import NotefulForm from "../NotefulForm/NotefulForm";
 
 export default class AddFolder extends Component {
   constructor(props) {
@@ -73,19 +74,33 @@ export default class AddFolder extends Component {
     this.handleSubmit = (event) => {
       event.preventDefault();
       console.log(addFolder)
-      this.addFolderRequest(this.state.name, addFolder);
+      this.addFolderRequest(event.target.name.value,addFolder);
       this.props.history.push("/")
     }
 
     return (
-      <form onSubmit={ (e) => this.handleSubmit(e) }>
-        <label>Add Folder: 
-          <input onChange={ (e) => this.updateFolder(e.target.value) } type="text" name="addFolder" id="addFolder"></input>
-        </label>
-        <ValiationError hasError={!this.state.folderValid} message={this.state.validMessage}/>
-        <button type="submit" disabled={!this.state.folderValid}>Submit</button>
-      </form>
-    )
+      <section className="AddFolder">
+				<h2>Create a folder</h2>
+				<NotefulForm onSubmit={this.handleSubmit}>
+					<div className="field">
+						<label htmlFor="folder-name-input">Name</label>
+            <ValiationError hasError={!this.state.folderValid} message={this.state.validMessage}/>
+						<input type="text" id="name-input" name="name" />
+					</div>
+					<div className="buttons">
+						<button type="submit">Add folder</button>
+					</div>
+				</NotefulForm>
+			</section>
+		);
+    //   <form onSubmit={ (e) => this.handleSubmit(e) }>
+    //     <label>Add Folder: 
+    //       <input onChange={ (e) => this.updateFolder(e.target.value) } type="text" name="addFolder" id="addFolder"></input>
+    //     </label>
+    //     <ValiationError hasError={!this.state.folderValid} message={this.state.validMessage}/>
+    //     <button type="submit" disabled={!this.state.folderValid}>Submit</button>
+    //   </form>
+    // )
   }
   
 

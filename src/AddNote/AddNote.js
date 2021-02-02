@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import NotesContext from '../NotesContext';
 import config from '../config'
 import PropTypes from 'prop-types'
+import NotefulForm from "../NotefulForm/NotefulForm";
+import "./AddNote.css";
 
 export default class AddNote extends Component {
   constructor(props) {
@@ -117,7 +119,7 @@ export default class AddNote extends Component {
     this.handleSubmit = (event) => {
       event.preventDefault();
       console.log(this.state.folder.id)
-      this.addNoteRequest(this.state.noteName, this.state.noteContent,( this.state.folder)
+      this.addNoteRequest(event.target.name.value, event.target.content.value,( event.target.folderId.value)
         //folder.name === this.state.folder).id
         , new Date(), addNote)
      
@@ -127,37 +129,65 @@ export default class AddNote extends Component {
     const { addNote } = this.context
 
     return (
-      <div>
-        <form onSubmit={(event) => this.handleSubmit(event)}>
-          <label > Note Name
-            <input required placeholder="Note name" onChange={(e) => this.updateNoteName(e.target.value)}></input>
-          </label>
-          <label> Note content
-            <input placeholder="Note content" onChange={(e) => this.updateNoteContent(e.target.value)}></input>
-          </label>
-          <label> Folder Name
-            <select required
-            name="folderid" onChange={(e) =>  this.updateFolder(e.target.value)}>
-              <option>
+      <section className="AddNote">
+				<h2>Create a note</h2>
+				<NotefulForm onSubmit={this.handleSubmit}>
+					<div className="field">
+						<label htmlFor="note-name-input">Name</label>
+						<input type="text" id="note-name-input" name="name" />
+					</div>
+					<div className="field">
+						<label htmlFor="note-content-input">Content</label>
+						<textarea id="note-content-input" name="content" />
+					</div>
+					<div className="field">
+						<label htmlFor="note-folder-select">Folder</label>
+						<select id="note-folder-select" name="folderId">
+							<option value={null}>...</option>
+							{this.context.folders.map((folder) => (
+								<option key={folder.id} value={folder.id}>
+									{folder.name}
+								</option>
+							))}
+						</select>
+					</div>
+					<div className="buttons">
+						<button type="submit">Add note</button>
+					</div>
+				</NotefulForm>
+			</section>
+		);
+    //   <div>
+    //     <form onSubmit={(event) => this.handleSubmit(event)}>
+    //       <label > Note Name
+    //         <input required placeholder="Note name" onChange={(e) => this.updateNoteName(e.target.value)}></input>
+    //       </label>
+    //       <label> Note content
+    //         <input placeholder="Note content" onChange={(e) => this.updateNoteContent(e.target.value)}></input>
+    //       </label>
+    //       <label> Folder Name
+    //         <select required
+    //         name="folderid" onChange={(e) =>  this.updateFolder(e.target.value)}>
+    //           <option>
 
-              </option>
-              {this.context.folders.map(folder=> <option 
-              value={folder.id}
-              key={folder.id}>
-                {folder.name}
-                </option>)}
-            </select>
+    //           </option>
+    //           {this.context.folders.map(folder=> <option 
+    //           value={folder.id}
+    //           key={folder.id}>
+    //             {folder.name}
+    //             </option>)}
+    //         </select>
             
              
             
-          </label>
-          <button type="submit">Submit</button>
-        </form>
-        {!this.state.validNoteName ? <p>{this.state.validNoteMessage}</p> : <></>}
-        {!this.state.validContent ? <p>{this.state.validContentMessage}</p> : <></>}
-        {!this.state.validFolder ? <p>{this.state.validFolderMessage}</p> : <> </>}
-      </div>
-    )
+    //       </label>
+    //       <button type="submit">Submit</button>
+    //     </form>
+    //     {!this.state.validNoteName ? <p>{this.state.validNoteMessage}</p> : <></>}
+    //     {!this.state.validContent ? <p>{this.state.validContentMessage}</p> : <></>}
+    //     {!this.state.validFolder ? <p>{this.state.validFolderMessage}</p> : <> </>}
+    //   </div>
+    // )
   }
 }
 AddNote.propTypes = {

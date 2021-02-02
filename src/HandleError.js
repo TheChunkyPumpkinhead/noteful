@@ -6,7 +6,7 @@ export default class HandleError extends React.Component  {
 
     console.error(error);
 
-    this.setState({hasError: error})
+    return {hasError: error}
   }
   render() {
     if (this.state.hasError) {

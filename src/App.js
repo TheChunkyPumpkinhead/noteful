@@ -145,7 +145,7 @@ class App extends Component {
       addNote: this.addNote,
       getNotes:this.getNotes,
     }
-
+    console.log (contextValue)
     return (
       <HandleError>
       <NotesContext.Provider value={contextValue}>

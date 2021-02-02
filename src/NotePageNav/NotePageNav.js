@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CircleButton from '../CircleButton/CircleButton'
-import NotesContext from '../NotesContext'
+// import NotesContext from '../NotesContext'
 import './NotePageNav.css'
+// import { findNote, findFolder } from "../notes-helpers";
+
 
 class NotePageNav extends Component {
 
-  static contextType = NotesContext
+
+	
 
   render() {
     const {folders} = this.context
