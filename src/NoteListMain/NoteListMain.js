@@ -1,24 +1,24 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Note from '../Note/Note'
-import CircleButton from '../CircleButton/CircleButton'
-import './NoteListMain.css'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Note from '../Note/Note';
+import CircleButton from '../CircleButton/CircleButton';
+import './NoteListMain.css';
 import NotesContext from '../NotesContext';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 class NoteListMain extends Component {
 
-  static contextType = NotesContext
+  static contextType = NotesContext;
   render() {
     const { notes } = this.context;
-    const folderId = this.props.match.params.folderId
+    const folder_id = this.props.match.params.folder_id;
 
     const notesInFolder = notes.filter((note) => {
-      if (folderId) {
-        return note.folderId === folderId
+      if (folder_id) {
+        return note.folder_id == folder_id;
       } else {
-        return note
+        return note;
       }
     }
     );
@@ -34,8 +34,8 @@ class NoteListMain extends Component {
               <li key={note.id}>
                 <Note
                   id={note.id}
-                  name={note.name}
-                  modified={note.modified}
+                  title={note.title}
+                  date_published={note.date_published}
                   history={this.props.history}
                   match={this.props.match}
                 />
@@ -59,7 +59,7 @@ class NoteListMain extends Component {
         :
 
         <h3>{this.props.error}</h3>
-    )
+    );
   }
 }
 Note.propTypes = {

@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import NotesContext from '../NotesContext';
-import config from '../config'
-import PropTypes from 'prop-types'
+import config from '../config';
+import PropTypes from 'prop-types';
 import NotefulForm from "../NotefulForm/NotefulForm";
 import "./AddNote.css";
 
 export default class AddNote extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       noteName: '',
       noteContent: '',
       folder: '',
-      folderId: '',
+      folder_id: '',
       validNoteMessage: '',
       validNoteName: false,
       validContentMessage: '',
@@ -20,22 +20,22 @@ export default class AddNote extends Component {
       validFolderMessage: '',
       validFolder: false,
       datetime: new Date()
-    }
+    };
   }
 
   static contextType = NotesContext;
 
   updateNoteName(name) {
-    this.setState({ noteName: name }, () => { this.validateNoteName(name) })
+    this.setState({ noteName: name }, () => { this.validateNoteName(name); });
   }
 
   updateNoteContent(content) {
-    this.setState({ noteContent: content }, () => { this.validateNoteContent(content) })
+    this.setState({ noteContent: content }, () => { this.validateNoteContent(content); });
   }
 
   updateFolder(name) {
-    console.log(name)
-    this.setState({ folder: name }, () => { })
+    console.log(name);
+    this.setState({ folder: name }, () => { });
   }
 
   // validateFolder(name) {
@@ -68,7 +68,7 @@ export default class AddNote extends Component {
     this.setState({
       validMessage: errorMsg,
       validNoteName: !hasError
-    })
+    });
   }
 
   validateNoteContent(content) {
@@ -85,78 +85,78 @@ export default class AddNote extends Component {
     this.setState({
       validContentMessage: errorMsg,
       valdContent: !hasError
-    })
+    });
   }
 
-  addNoteRequest(name, content, folderId, date, addNote) {
+  addNoteRequest(name, content, folder_id, date, addNote) {
     fetch(`${config.API_ENDPOINT}/notes`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify({ name: name, content: content, modified: date, folderId: folderId })
+      body: JSON.stringify({ title: name, content: content, date_published: date, folder_id: folder_id })
     })
       .then(res => {
         if (!res.ok) {
-          throw new Error('Couldn\'t add note. Sorry!')
+          throw new Error('Couldn\'t add note. Sorry!');
         }
         return res.json();
-        
+
       })
       .then(res => {
-        addNote(res)
-      this.context.getNotes()
+        addNote(res);
+        this.context.getNotes();
       })
-     
-      
-      .catch(err => console.log(err))
+
+
+      .catch(err => console.log(err));
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
 
 
     this.handleSubmit = (event) => {
       event.preventDefault();
-      console.log(this.state.folder.id)
-      this.addNoteRequest(event.target.name.value, event.target.content.value,( event.target.folderId.value)
+      console.log(this.state.folder.id);
+      this.addNoteRequest(event.target.name.value, event.target.content.value, (event.target.folder_id.value)
         //folder.name === this.state.folder).id
-        , new Date(), addNote)
-     
-      this.props.history.push("/")
-    }
+        , new Date(), addNote);
 
-    const { addNote } = this.context
+      this.props.history.push("/");
+    };
+
+    const { addNote } = this.context;
 
     return (
       <section className="AddNote">
-				<h2>Create a note</h2>
-				<NotefulForm onSubmit={this.handleSubmit}>
-					<div className="field">
-						<label htmlFor="note-name-input">Name</label>
-						<input type="text" id="note-name-input" name="name" />
-					</div>
-					<div className="field">
-						<label htmlFor="note-content-input">Content</label>
-						<textarea id="note-content-input" name="content" />
-					</div>
-					<div className="field">
-						<label htmlFor="note-folder-select">Folder</label>
-						<select id="note-folder-select" name="folderId">
-							<option value={null}>...</option>
-							{this.context.folders.map((folder) => (
-								<option key={folder.id} value={folder.id}>
-									{folder.name}
-								</option>
-							))}
-						</select>
-					</div>
-					<div className="buttons">
-						<button type="submit">Add note</button>
-					</div>
-				</NotefulForm>
-			</section>
-		);
+        <h2>Create a note</h2>
+        <NotefulForm onSubmit={this.handleSubmit}>
+          <div className="field">
+            <label htmlFor="note-name-input">Name</label>
+            <input type="text" id="note-name-input" name="name" />
+          </div>
+          <div className="field">
+            <label htmlFor="note-content-input">Content</label>
+            <textarea id="note-content-input" name="content" />
+          </div>
+          <div className="field">
+            <label htmlFor="note-folder-select">Folder</label>
+            <select id="note-folder-select" name="folder_id">
+              <option value={null}>...</option>
+              {this.context.folders.map((folder) => (
+                <option key={folder.id} value={folder.id}>
+                  {folder.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="buttons">
+            <button type="submit">Add note</button>
+          </div>
+        </NotefulForm>
+      </section>
+    );
     //   <div>
     //     <form onSubmit={(event) => this.handleSubmit(event)}>
     //       <label > Note Name
@@ -167,7 +167,7 @@ export default class AddNote extends Component {
     //       </label>
     //       <label> Folder Name
     //         <select required
-    //         name="folderid" onChange={(e) =>  this.updateFolder(e.target.value)}>
+    //         name="folder_id" onChange={(e) =>  this.updateFolder(e.target.value)}>
     //           <option>
 
     //           </option>
@@ -177,9 +177,9 @@ export default class AddNote extends Component {
     //             {folder.name}
     //             </option>)}
     //         </select>
-            
-             
-            
+
+
+
     //       </label>
     //       <button type="submit">Submit</button>
     //     </form>

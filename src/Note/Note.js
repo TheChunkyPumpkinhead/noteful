@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import './Note.css'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './Note.css';
 import NotesContext from '../NotesContext';
-import config from '../config'
-import PropTypes from 'prop-types'
+import config from '../config';
+import PropTypes from 'prop-types';
+import moment from "moment"
 
 
 
@@ -12,7 +13,7 @@ class Note extends Component {
   deleteRequest = (noteId, callback) => {
     fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
 
-      // fetch(`http://localhost:9090/notes/${noteId}`, {
+
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'
@@ -21,34 +22,34 @@ class Note extends Component {
       .then(res => {
         if (!res.ok) {
           return res.json().then(error => {
-            throw error
-          })
+            throw error;
+          });
         }
-        return res.json()
+        return res.json();
       })
       .then(res => callback(noteId))
       .catch(error => {
-        console.log((error.message))
-      })
-  }
+        console.log((error.message));
+      });
+  };
 
 
   render() {
-    console.log(this.props.match.path)
+    console.log(this.props.match.path);
     return (
       <NotesContext.Consumer>
         {(context) => (
           <div className='Note'>
             <h2 className='Note__title'>
               <Link to={`/note/${this.props.id}`}>
-                {this.props.name}
+                {this.props.title}
               </Link>
             </h2>
             <button className='Note__delete' type='button'
               onClick={() => {
                 this.deleteRequest(this.props.id, context.deleteNote);
                 if (this.props.match.path === "/note/:noteId") {
-                  this.props.history.push('/')
+                  this.props.history.push('/');
                 }
               }}
             >
@@ -57,27 +58,27 @@ class Note extends Component {
             remove
           </button>
             <div className='Note__dates'>
-              <div className='Note__dates-modified'>
-                Modified
+              <div className='Note__dates-date_published'>
+                date_published
               {' '}
                 <span className='Date'>
-                  {/* {this.props.modified?format(this.props.modified, 'Do MMM YYYY'):null} */}
+                  {this.props.date_published?moment(this.props.date_published).format( 'Do MMM YYYY'):null}
                 </span>
               </div>
             </div>
           </div>
         )}
       </NotesContext.Consumer>
-    )
+    );
   }
 }
 Note.propTypes = {
   history: PropTypes.any,
-  id:PropTypes.number,
-  name:PropTypes.string,
-  match:PropTypes.any,
+  id: PropTypes.number,
+  name: PropTypes.string,
+  match: PropTypes.any,
 
 
 };
 
-export default Note
+export default Note;
