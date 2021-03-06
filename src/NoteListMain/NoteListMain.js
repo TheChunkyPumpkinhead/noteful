@@ -16,7 +16,7 @@ class NoteListMain extends Component {
 
     const notesInFolder = notes.filter((note) => {
       if (folder_id) {
-        return note.folder_id == folder_id;
+        return note.folder_id === parseInt(folder_id);
       } else {
         return note;
       }
